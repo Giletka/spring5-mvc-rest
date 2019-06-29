@@ -114,7 +114,7 @@ class CustomerControllerTest extends AbstractRestControllerTest {
         returnDTO.setLastname(customerDTO.getLastname());
         returnDTO.setCustomerUrl("/api/v1/customers/1");
 
-        when(customerService.saveCustomerDTO(anyLong(), any(CustomerDTO.class))).thenReturn(returnDTO);
+        when(customerService.saveCustomerByDTO(anyLong(), any(CustomerDTO.class))).thenReturn(returnDTO);
 
         mockMvc.perform(put("/api/v1/customers/1")
                     .contentType(MediaType.APPLICATION_JSON)

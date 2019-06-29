@@ -88,7 +88,7 @@ class CustomerServiceTest {
     }
 
     @Test
-    void saveCustomerDTO() {
+    void saveCustomerByDTO() {
         CustomerDTO customerDTO = new CustomerDTO();
         customerDTO.setFirstname("Jim");
 
@@ -99,7 +99,7 @@ class CustomerServiceTest {
 
         when(customerRepository.save(any(Customer.class))).thenReturn(savedCustomer);
 
-        CustomerDTO savedDTO = customerService.saveCustomerDTO(1L, customerDTO);
+        CustomerDTO savedDTO = customerService.saveCustomerByDTO(1L, customerDTO);
         assertEquals(customerDTO.getFirstname(), savedDTO.getFirstname());
         assertEquals("/api/v1/customers/1", savedDTO.getCustomerUrl());
     }
