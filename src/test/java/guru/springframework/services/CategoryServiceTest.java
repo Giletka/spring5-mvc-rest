@@ -54,7 +54,6 @@ class CategoryServiceTest {
         when(categoryRepository.findByName(anyString())).thenReturn(category);
 
         CategoryDTO categoryDTO = categoryService.getCategoryByName(NAME);
-
         assertEquals(ID, categoryDTO.getId());
         assertEquals(NAME, categoryDTO.getName());
     }
