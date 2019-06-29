@@ -7,7 +7,6 @@ import guru.springframework.repositories.CustomerRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -15,7 +14,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
@@ -82,8 +82,25 @@ class CustomerServiceTest {
 
         when(customerRepository.save(any(Customer.class))).thenReturn(savedCustomer);
 
-        CustomerDTO saveDto = customerService.createNewCustomer(customerDTO);
-        assertEquals(customerDTO.getFirstname(), saveDto.getFirstname());
-        assertEquals("/api/v1/customer/1", saveDto.getCustomerUrl());
+        CustomerDTO savedDTO = customerService.createNewCustomer(customerDTO);
+        assertEquals(customerDTO.getFirstname(), savedDTO.getFirstname());
+        assertEquals("/api/v1/customers/1", savedDTO.getCustomerUrl());
+    }
+
+    @Test
+    void saveCustomerDTO() {
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setFirstname("Jim");
+
+        Customer savedCustomer = new Customer();
+        savedCustomer.setId(1L);
+        savedCustomer.setFirstname(customerDTO.getFirstname());
+        savedCustomer.setLastname(customerDTO.getLastname());
+
+        when(customerRepository.save(any(Customer.class))).thenReturn(savedCustomer);
+
+        CustomerDTO savedDTO = customerService.saveCustomerDTO(1L, customerDTO);
+        assertEquals(customerDTO.getFirstname(), savedDTO.getFirstname());
+        assertEquals("/api/v1/customers/1", savedDTO.getCustomerUrl());
     }
 }
