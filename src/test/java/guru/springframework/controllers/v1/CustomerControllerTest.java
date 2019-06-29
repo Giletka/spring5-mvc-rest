@@ -140,7 +140,7 @@ class CustomerControllerTest extends AbstractRestControllerTest {
 
         when(customerService.patchCustomer(anyLong(), any(CustomerDTO.class))).thenReturn(returnDTO);
 
-        mockMvc.perform(patch("/api/v1/customers/1")
+        mockMvc.perform(patch(CustomerController.BASE_URL + "/1")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(asJsonString(customerDTO)))
                 .andExpect(status().isOk())
@@ -152,7 +152,7 @@ class CustomerControllerTest extends AbstractRestControllerTest {
     @Test
     void testDeleteCustomer() throws Exception {
 
-        mockMvc.perform(delete("/api/v1/customers/1")
+        mockMvc.perform(delete(CustomerController.BASE_URL + "/1")
                     .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
