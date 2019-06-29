@@ -2,6 +2,7 @@ package guru.springframework.services;
 
 import guru.springframework.api.v1.mapper.CustomerMapper;
 import guru.springframework.api.v1.model.CustomerDTO;
+import guru.springframework.controllers.v1.CustomerController;
 import guru.springframework.domain.Customer;
 import guru.springframework.repositories.CustomerRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +27,6 @@ class CustomerServiceTest {
     private static final long ID = 1L;
     private static final String FIRSTNAME = "John";
     private static final String LASTNAME = "Smith";
-    private static final String CUSTOMER_URL = "/api/v1/customers/1";
 
     @Mock
     private CustomerRepository customerRepository;
@@ -60,7 +60,7 @@ class CustomerServiceTest {
         CustomerDTO customerDTO = customerService.getCustomerById(ID);
         assertEquals(FIRSTNAME, customerDTO.getFirstname());
         assertEquals(LASTNAME, customerDTO.getLastname());
-        assertEquals(CUSTOMER_URL, customerDTO.getCustomerUrl());
+        assertEquals(CustomerController.BASE_URL + "/" + ID, customerDTO.getCustomerUrl());
     }
 
     @Test
@@ -84,7 +84,7 @@ class CustomerServiceTest {
 
         CustomerDTO savedDTO = customerService.createNewCustomer(customerDTO);
         assertEquals(customerDTO.getFirstname(), savedDTO.getFirstname());
-        assertEquals("/api/v1/customers/1", savedDTO.getCustomerUrl());
+        assertEquals(CustomerController.BASE_URL + "/1", savedDTO.getCustomerUrl());
     }
 
     @Test
@@ -101,7 +101,7 @@ class CustomerServiceTest {
 
         CustomerDTO savedDTO = customerService.saveCustomerByDTO(1L, customerDTO);
         assertEquals(customerDTO.getFirstname(), savedDTO.getFirstname());
-        assertEquals("/api/v1/customers/1", savedDTO.getCustomerUrl());
+        assertEquals(CustomerController.BASE_URL + "/1", savedDTO.getCustomerUrl());
     }
 
     @Test
